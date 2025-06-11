@@ -1,0 +1,57 @@
+[
+  {
+    "id": "1",
+    "name": "Sarah Johnson",
+    "email": "sarah.johnson@techcorp.com",
+    "phone": "+1 (555) 123-4567",
+    "company": "TechCorp Solutions",
+    "tags": ["enterprise", "decision-maker"],
+    "status": "active",
+    "createdAt": "1/15/2024 10:30:00 AMZ",
+    "lastContact": "2024-01-20T14:45:00Z"
+  },
+  {
+    "id": "2",
+    "name": "Michael Chen",
+    "email": "m.chen@innovatelab.io",
+    "phone": "+1 (555) 234-5678",
+    "company": "InnovateLab",
+    "tags": ["startup", "technical"],
+    "status": "prospect",
+    "createdAt": "2024-01-10T09:15:00Z",
+    "lastContact": "2024-01-18T11:20:00Z"
+  },
+  {
+    "id": "3",
+    "name": "Emily Rodriguez",
+    "email": "emily.r@globalventures.com",
+    "phone": "+1 (555) 345-6789",
+    "company": "Global Ventures Inc",
+    "tags": ["enterprise", "finance"],
+    "status": "active",
+    "createdAt": "2024-01-08T13:45:00Z",
+    "lastContact": "2024-01-19T16:30:00Z"
+  },
+  {
+    "id": "4",
+    "name": "David Thompson",
+    "email": "david@creativestudio.net",
+    "phone": "+1 (555) 456-7890",
+    "company": "Creative Studio",
+    "tags": ["agency", "creative"],
+    "status": "lead",
+    "createdAt": "2024-01-12T11:00:00Z",
+    "lastContact": "2024-01-17T10:15:00Z"
+  },
+  {
+    "id": "5",
+    "name": "Lisa Wang",
+    "email": "lisa.wang@futuretech.ai",
+    "phone": "+1 (555) 567-8901",
+    "company": "FutureTech AI",
+    "tags": ["startup", "ai", "technical"],
+    "status": "prospect",
+    "createdAt": "2024-01-14T15:20:00Z",
+    "lastContact": "2024-01-21T09:45:00Z"
+  }
+]
