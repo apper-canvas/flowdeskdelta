@@ -5,6 +5,7 @@ import ApperIcon from '@/components/ApperIcon';
 import DashboardMetricsGrid from '@/components/organisms/DashboardMetricsGrid';
 import ActivityTimeline from '@/components/organisms/ActivityTimeline';
 import FeatureCard from '@/components/molecules/FeatureCard';
+import ActivityItem from '@/components/molecules/ActivityItem';
 import DealCard from '@/components/molecules/DealCard'; // For pipeline overview
 import { contactService, dealService, activityService } from '@/services';
 import { formatCurrency, getContactById } from '@/utils/helpers';
