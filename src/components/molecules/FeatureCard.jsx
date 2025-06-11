@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import ApperIcon from './ApperIcon';
+import ApperIcon from '@/components/ApperIcon';
 
-const MainFeature = ({ title, description, icon, children, className = "" }) => {
+const FeatureCard = ({ title, description, icon, children, className = "" }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -29,4 +29,4 @@ const MainFeature = ({ title, description, icon, children, className = "" }) => 
   );
 };
 
-export default MainFeature;
+export default FeatureCard;

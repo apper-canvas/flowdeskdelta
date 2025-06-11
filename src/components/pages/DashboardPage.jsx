@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
-import ApperIcon from '../components/ApperIcon';
-import MainFeature from '../components/MainFeature';
-import { contactService, dealService, activityService } from '../services';
-import { formatCurrency, formatDateTime, getContactById } from '../utils/helpers';
+import ApperIcon from '@/components/ApperIcon';
+import DashboardMetricsGrid from '@/components/organisms/DashboardMetricsGrid';
+import ActivityTimeline from '@/components/organisms/ActivityTimeline';
+import FeatureCard from '@/components/molecules/FeatureCard';
+import DealCard from '@/components/molecules/DealCard'; // For pipeline overview
+import { contactService, dealService, activityService } from '@/services';
+import { formatCurrency, getContactById } from '@/utils/helpers';
 
-const Dashboard = () => {
+const DashboardPage = () => {
   const [contacts, setContacts] = useState([]);
   const [deals, setDeals] = useState([]);
   const [activities, setActivities] = useState([]);
@@ -55,14 +58,6 @@ const Dashboard = () => {
     lost: 'bg-red-100 text-red-800'
   };
 
-  const activityIcons = {
-    call: 'Phone',
-    email: 'Mail',
-    meeting: 'Calendar',
-    note: 'FileText',
-    task: 'CheckSquare'
-  };
-
   if (loading) {
     return (
       <div className="p-6 max-w-full overflow-hidden">
@@ -82,7 +77,7 @@ const Dashboard = () => {
               </motion.div>
             ))}
           </div>
-          
+
           {/* Content skeleton */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {[...Array(2)].map((_, i) => (
@@ -135,88 +130,10 @@ const Dashboard = () => {
       </div>
 
       <div className="space-y-6">
-        {/* Metrics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Contacts</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">
-                  {metrics.totalContacts}
-                </p>
-              </div>
-              <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <ApperIcon name="Users" size={24} className="text-white" />
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Active Deals</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">
-                  {metrics.activeDeals}
-                </p>
-              </div>
-              <div className="w-12 h-12 bg-accent rounded-lg flex items-center justify-center">
-                <ApperIcon name="TrendingUp" size={24} className="text-white" />
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Pipeline Value</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">
-                  {formatCurrency(metrics.pipelineValue)}
-                </p>
-              </div>
-              <div className="w-12 h-12 bg-warning rounded-lg flex items-center justify-center">
-                <ApperIcon name="DollarSign" size={24} className="text-white" />
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-200"
-          >
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Won Deals</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">
-                  {metrics.wonDeals}
-                </p>
-              </div>
-              <div className="w-12 h-12 bg-success rounded-lg flex items-center justify-center">
-                <ApperIcon name="Trophy" size={24} className="text-white" />
-              </div>
-            </div>
-          </motion.div>
-        </div>
+        <DashboardMetricsGrid metrics={metrics} />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Recent Activities */}
-          <MainFeature
+          <FeatureCard
             title="Recent Activities"
             description="Latest interactions and updates"
             icon="Clock"
@@ -232,51 +149,30 @@ const Dashboard = () => {
                 {activities.map((activity, index) => {
                   const contact = getContactById(contacts, activity.contactId);
                   return (
-                    <motion.div
+                    <ActivityItem
                       key={activity.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                    >
-                      <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <ApperIcon 
-                          name={activityIcons[activity.type] || 'Circle'} 
-                          size={14} 
-                          className="text-gray-600" 
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-900 break-words">
-                          {activity.description}
-                        </p>
-                        <div className="flex items-center space-x-2 mt-1">
-                          <span className="text-xs text-gray-500">
-                            {contact?.name || 'Unknown Contact'}
-                          </span>
-                          <span className="text-xs text-gray-400">•</span>
-                          <span className="text-xs text-gray-500">
-                            {formatDateTime(activity.timestamp)}
-                          </span>
-                        </div>
-                      </div>
-                    </motion.div>
+                      activity={activity}
+                      contact={contact}
+                      index={index}
+                      showTimelineConnector={false} /* No timeline connector in dashboard overview */
+                      onEdit={() => {}} // No edit/delete from dashboard overview
+                      onDelete={() => {}}
+                    />
                   );
                 })}
               </div>
             )}
-          </MainFeature>
+          </FeatureCard>
 
-          {/* Pipeline Overview */}
-          <MainFeature
+          <FeatureCard
             title="Deal Pipeline"
             description="Current deals by stage"
             icon="TrendingUp"
           >
-            {deals.length === 0 ? (
+            {deals.filter(deal => !['won', 'lost'].includes(deal.stage)).length === 0 ? (
               <div className="text-center py-8">
                 <ApperIcon name="TrendingUp" size={48} className="text-gray-300 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No deals yet</h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No active deals yet</h3>
                 <p className="text-gray-600">Create your first deal to get started</p>
               </div>
             ) : (
@@ -322,11 +218,11 @@ const Dashboard = () => {
                 })}
               </div>
             )}
-          </MainFeature>
+          </FeatureCard>
         </div>
       </div>
     </motion.div>
   );
 };
 
-export default Dashboard;
+export default DashboardPage;
