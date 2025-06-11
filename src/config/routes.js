@@ -3,7 +3,7 @@ import DashboardPage from '@/components/pages/DashboardPage';
 import ContactsPage from '@/components/pages/ContactsPage';
 import DealsPage from '@/components/pages/DealsPage';
 import ActivitiesPage from '@/components/pages/ActivitiesPage';
-
+import CalendarPage from '@/components/pages/CalendarPage';
 export const routes = {
   home: {
     id: 'home',
@@ -35,13 +35,19 @@ id: 'deals',
     icon: 'DollarSign',
     component: DealsPage
   },
-  activities: {
+activities: {
     id: 'activities',
-id: 'activities',
     label: 'Activities',
     path: '/activities',
     icon: 'Clock',
     component: ActivitiesPage
+  },
+  calendar: {
+    id: 'calendar',
+    label: 'Calendar',
+    path: '/calendar',
+    icon: 'Calendar',
+    component: CalendarPage
   }
 };
 
